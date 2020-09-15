@@ -51,7 +51,11 @@ router.post("/api/images", upload.single('image'), (req, res) => {
 });
 
 router.get("/:image", (req, res) => {
-  res.sendFile(path.join(appDir, process.env.IMAGE_STORAGE_LOCATION, req.params.image));
+  res.sendFile(path.join(appDir, process.env.IMAGE_STORAGE_LOCATION, req.params.image), (err) => {
+    if (err) {
+      res.status(404).send('Image not found');
+    }
+  });
 });
 
 module.exports = router;
