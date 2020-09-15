@@ -11,6 +11,7 @@
   "author": "Karm0s",
   "license": "ISC",
   "dependencies": {
+    "dotenv": "^8.2.0",
     "express": "^4.17.1",
     "multer": "^1.4.2",
     "nodemon": "^2.0.4"
