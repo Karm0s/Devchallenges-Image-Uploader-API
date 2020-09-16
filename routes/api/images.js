@@ -4,12 +4,16 @@ const path = require("path");
 const fs = require("fs");
 const crypto = require("crypto");
 const url = require("url");
-const { time } = require("console");
-const { basename } = require("path");
+const cors = require("cors");
 
 const appDir = path.dirname(require.main.filename);
 
 const router = express.Router();
+
+const corsOptions = {
+  origin: process.env.WEBAPPURL || "http://localhost:8080"
+}
+router.use(cors(corsOptions));
 
 const storage = multer.diskStorage({
   destination: (req, file, cb) => {
@@ -47,7 +51,7 @@ let upload = multer({
 let timeOuts = []; // store timers to trigger image deletion
 let TIMEOUT = 1000 * 60 * 60 * 24; // 24 Hours timeout
 
-router.post("/api/images", upload.single("image"), (req, res) => {
+router.post("/", upload.single("image"), (req, res) => {
   console.log(req.file);
   if (req.fileValidationError) {
     res.status(400).json({ status: 400, error: "file type not supported" });
@@ -57,7 +61,7 @@ router.post("/api/images", upload.single("image"), (req, res) => {
       link: url.format({
         protocol: req.protocol,
         host: req.get("host"),
-        pathname: res.req.file.filename,
+        pathname: `${process.env.MEDIA_PATH}/${res.req.file.filename}`,
       }),
     });
     const timer = setTimeout(() => {
@@ -67,17 +71,6 @@ router.post("/api/images", upload.single("image"), (req, res) => {
     }, TIMEOUT);
     timeOuts.push(timer);
   }
-});
-
-router.get("/:image", (req, res) => {
-  res.sendFile(
-    path.join(appDir, process.env.IMAGE_STORAGE_LOCATION, req.params.image),
-    (err) => {
-      if (err) {
-        res.status(404).send("Image not found");
-      }
-    }
-  );
 });
 
 module.exports = router;

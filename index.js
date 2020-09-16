@@ -10,7 +10,8 @@ const PORT = process.env.PORT || 5000;
 
 
 // Setting routes
-app.use('/', require('./routes/api/images'));
+app.use('/api/images', require('./routes/api/images'));
+app.use('/media/images', require('./routes/media/images'));
 
 app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`);
