@@ -1,1 +1,1 @@
-# Devchallenges: Image Uploader using Vue.js
+# Devchallenges: Image Uploader API
