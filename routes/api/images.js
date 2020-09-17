@@ -52,7 +52,6 @@ let timeOuts = []; // store timers to trigger image deletion
 let TIMEOUT = 1000 * 60 * 60 * 24; // 24 Hours timeout
 
 router.post("/", upload.single("image"), (req, res) => {
-  console.log(req.file);
   if (req.fileValidationError) {
     res.status(400).json({ status: 400, error: "file type not supported" });
   } else {

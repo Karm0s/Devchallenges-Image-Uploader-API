@@ -13,7 +13,7 @@ router.get("/:image", (req, res) => {
     path.join(appDir, process.env.IMAGE_STORAGE_LOCATION, req.params.image),
     (err) => {
       if (err) {
-        res.status(404).send("Image not found");
+        res.status(404).send("<h3>Image not found</h3>");
       }
     }
   );
