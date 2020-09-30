@@ -13,7 +13,6 @@ const router = express.Router();
 const corsOptions = {
   origin: process.env.WEBAPPURL || "http://localhost:8080"
 }
-console.log(corsOptions);
 router.use(cors(corsOptions));
 
 const storage = multer.diskStorage({
